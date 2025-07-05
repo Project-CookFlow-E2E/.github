@@ -1,10 +1,13 @@
-# Project CookFlow E2E
+# CookFlow E2E
 
 Elevating Quality Through Automated E2E Testing & CI/CD
 
 This repository is dedicated to the end-to-end (E2E) testing infrastructure for the CookFlow application. It stands as a robust demonstration of a modern CI/CD pipeline, integrating a Django backend, a React frontend, and Cypress for comprehensive E2E validation. My core work here has been to engineer a cross-repository trigger, ensuring that critical frontend E2E tests are automatically executed with every backend change, thus guaranteeing continuous application integrity and quality across all services.
 
 This base project is forked from https://github.com/Final-Project-CookFlow/, a foundational part of Factoría F5's Rural Camp 2nd Edition of Full Stack Web Development with Salesforce course.
+
+![image](https://github.com/user-attachments/assets/ee104338-96f9-41f7-87b5-fc5cce212f64)
+![image](https://github.com/user-attachments/assets/20bfaec8-523b-4b16-80cd-358f666a032c)
 
 ## 🙋 My Role & Contributions: Ensuring Quality at Every Step
 As the QA/Developer for this project, my focus has been on building and maintaining a resilient automated testing framework. This involved:
@@ -20,8 +23,10 @@ This project showcases practical expertise in building automated quality gates f
 The project is structured across two main GitHub repositories, which are brought together for E2E validation:
 - CF-Backend: Houses the Django REST API.
 - CF-Frontend: Contains the React single-page application (SPA) and the Cypress E2E testing suite.
+- Both services are containerized with Docker and orchestrated via Docker Compose, providing a consistent environment for both local development and continuous integration.
 
-Both services are containerized with Docker and orchestrated via Docker Compose, providing a consistent environment for both local development and continuous integration.
+<img src="https://github.com/user-attachments/assets/32ca4209-33e3-4256-959c-abfb3d4fabcb" width="300" alt="Description of this image">
+<img src="https://github.com/user-attachments/assets/7c283e0c-bd97-4655-a23b-fff980d495ec" width="300" alt="Description of this image">
 
 ## ⚙️ Architecture
 The Project-CookFlow-E2E system's testable components include:
@@ -46,9 +51,7 @@ These instructions will guide you through setting up the project locally for dev
 
 *** Prerequisites ***
 ```Git
-
 Docker Desktop for Windows (includes Docker Compose)
-
 For Cypress UI on Windows: VcXsrv Windows X Server
 ```
 
@@ -72,13 +75,11 @@ git clone https://github.com/Project-CookFlow-E2E/CF-Frontend.git
 All Docker Compose operations will be run from here.
 
 ```Bash
-
 cd CF-Frontend
 Install Node.js dependencies for the frontend:
 ```
 
 ```Bash
-
 npm install
 ```
 
@@ -89,6 +90,7 @@ npm install
 docker compose up --build -d
 docker compose up: Starts services defined in docker-compose.yml.
 ```
+
 - --build: Rebuilds service images if changes are detected.
 - -d: Runs containers in detached mode (background).
 
@@ -121,14 +123,36 @@ This is how tests run in the automated CI pipeline.
 #### From the CF-Frontend directory, after docker compose up -d:
 
 ```Bash
-# To run Cypress in headless mode
-docker compose run --rm cypress sh -c "cd /e2e && npm install && npx cypress run"
+For Windows (Git Bash/MINGW64):
+```bash
+docker compose run --rm \
+  -v /$(pwd -W):/app \
+  -w //app \
+  -e CYPRESS_BASE_URL=http://frontend:80 \
+  -e CYPRESS_API_URL=http://backend:8000/api \
+  cypress \
+  npm run cypress:run
+```
+```
+docker compose run --rm \
+  -v ${PWD}:/app \
+  -w /app \
+  -e CYPRESS_BASE_URL=http://frontend:80 \
+  -e CYPRESS_API_URL=http://backend:8000/api \
+  cypress \
+  npm run cypress:run
 ```
 
 ## Local UI Testing (Windows with VcXsrv) 🖥️
 For interactive debugging and test development, run Cypress UI on your Windows desktop.
 
 ### 1. Configure VcXsrv on Windows
+
+<img src="https://github.com/user-attachments/assets/5ce3b89c-d697-4752-aa73-d936995c40e7" width="300" alt="VcXsrv XLaunch Display Settings">
+<img src="https://github.com/user-attachments/assets/f251d386-0439-4478-8aed-cd7e57810ac7" width="300" alt="VcXsrv XLaunch Client Startup">
+<img src="https://github.com/user-attachments/assets/bc8b9055-a6f4-4a65-b6c6-e384a3b3b56b" width="300" alt="VcXsrv XLaunch Extra Settings">
+<img src="https://github.com/user-attachments/assets/9fe875f4-68c9-4a82-88ff-4f869c78d957" width="300" alt="VcXsrv Tray Icon">
+
 Launch XLaunch: Find and run "XLaunch" from your Start Menu.
 
 - Display Settings:
@@ -191,7 +215,6 @@ Start VcXsrv: Verify it's running.
 Bring up services: From CF-Frontend directory, ensure db, backend, and frontend are up:
 
 ```Bash
-
 docker compose up -d db backend frontend
 ```
 
@@ -229,11 +252,11 @@ Key QA Steps:
 ## ✅ Common QA Challenges & Solutions
 Through the development of this pipeline, I addressed several key challenges:
 
-Error [ERR_MODULE_NOT_FOUND]: Cannot find package 'cypress': This was resolved by ensuring npm install is executed inside the cypress Docker container before tests run, guaranteeing correct dependency resolution.
+- Error [ERR_MODULE_NOT_FOUND]: Cannot find package 'cypress': This was resolved by ensuring npm install is executed inside the cypress Docker container before tests run, guaranteeing correct dependency resolution.
 
-Failed to connect to the bus / Cypress timeout: This headless browser environment issue was fixed by using Cypress-optimized Docker images (cypress/included) and removing conflicting DISPLAY environment variables, allowing the image to manage its virtual display internally.
+- Failed to connect to the bus / Cypress timeout: This headless browser environment issue was fixed by using Cypress-optimized Docker images (cypress/included) and removing conflicting DISPLAY environment variables, allowing the image to manage its virtual display internally.
 
-repository_dispatch not triggering: This was resolved by ensuring the CF-Frontend workflow file (ci.yml) with the repository_dispatch listener was correctly placed on the default branch (main) of the CF-Frontend repository.
+- repository_dispatch not triggering: This was resolved by ensuring the CF-Frontend workflow file (ci.yml) with the repository_dispatch listener was correctly placed on the default branch (main) of the CF-Frontend repository.
 
 ## 🤝 Contributing
 Contributions are welcome! Please follow standard Git Flow practices.
@@ -244,6 +267,6 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 ## 🔗 Connect with Me!
 You can find more about my work and connect with me here:
 
-LinkedIn Profile: linkedin.com/in/hemaps
-GitHub Profile: github.com/void-craft
-Email: hemapriyaweb@gmail.com
+- LinkedIn Profile: linkedin.com/in/hemaps
+- GitHub Profile: github.com/void-craft
+- Email: hemapriyaweb@gmail.com
