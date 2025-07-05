@@ -6,6 +6,7 @@ This repository is dedicated to the end-to-end (E2E) testing infrastructure for 
 
 This base project is forked from https://github.com/Final-Project-CookFlow/, a foundational part of Factoría F5's Rural Camp 2nd Edition of Full Stack Web Development with Salesforce course.
 
+![Screenshot 2025-07-05 074002](https://github.com/user-attachments/assets/ea458773-08c5-4a92-b3c0-27c6b8c1d15b)
 ![image](https://github.com/user-attachments/assets/ee104338-96f9-41f7-87b5-fc5cce212f64)
 ![image](https://github.com/user-attachments/assets/20bfaec8-523b-4b16-80cd-358f666a032c)
 
