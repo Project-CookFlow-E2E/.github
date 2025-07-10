@@ -60,15 +60,19 @@ For Cypress UI on Windows: VcXsrv Windows X Server
 #### Clone the repositories:
 It's recommended to clone them into a parent directory for correct Docker Compose build contexts.
 
-```Bash
 # Create a parent directory, e.g., CookFlow-Project
+```Bash
 mkdir CookFlow-Project
 cd CookFlow-Project
+```
 
 # Clone the backend repository
+```
 git clone https://github.com/Project-CookFlow-E2E/CF-Backend.git
+```
 
 # Clone the frontend repository
+```
 git clone https://github.com/Project-CookFlow-E2E/CF-Frontend.git
 ```
 
@@ -77,9 +81,9 @@ All Docker Compose operations will be run from here.
 
 ```Bash
 cd CF-Frontend
-Install Node.js dependencies for the frontend:
 ```
 
+Install Node.js dependencies for the frontend:
 ```Bash
 npm install
 ```
@@ -89,8 +93,8 @@ npm install
 
 ```Bash
 docker compose up --build -d
-docker compose up: Starts services defined in docker-compose.yml.
 ```
+docker compose up: Starts services defined in docker-compose.yml.
 
 - --build: Rebuilds service images if changes are detected.
 - -d: Runs containers in detached mode (background).
@@ -123,21 +127,11 @@ This is how tests run in the automated CI pipeline.
 
 #### From the CF-Frontend directory, after docker compose up -d:
 
-```Bash
 For Windows (Git Bash/MINGW64):
 ```bash
 docker compose run --rm \
   -v /$(pwd -W):/app \
   -w //app \
-  -e CYPRESS_BASE_URL=http://frontend:80 \
-  -e CYPRESS_API_URL=http://backend:8000/api \
-  cypress \
-  npm run cypress:run
-```
-```
-docker compose run --rm \
-  -v ${PWD}:/app \
-  -w /app \
   -e CYPRESS_BASE_URL=http://frontend:80 \
   -e CYPRESS_API_URL=http://backend:8000/api \
   cypress \
